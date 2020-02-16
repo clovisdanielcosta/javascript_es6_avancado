@@ -18,11 +18,11 @@ console.log(Object.getOwnPropertySymbols(obj));
 
 // Propriedade Well Known Symbol 
 // Symbol.iterator
-Symbol.iterator
-Symbol.split
-Symbol.toPrimitive
-Symbol.asyncIterator
-Symbol.toStringTag
+Symbol.iterator;
+Symbol.split;
+Symbol.toPrimitive;
+Symbol.asyncIterator;
+Symbol.toStringTag;
 
 /* 
 Para não haver colisão de propriedades se responsabiliza
@@ -70,3 +70,30 @@ const str = 'Digital Inovation One';
 for (let value of str) {
     console.log(value);
 }
+
+// Consumindo um iterador de array
+const obj6 = {
+    values: [1, 2, 3, 4],
+    [Symbol.iterator]() {
+        let i = 0;
+
+        return {
+            next: () => {
+                i++;
+
+                return {
+                    value: this.values[i - 1],
+                    done: i > this.values.length
+                };
+            }
+        };
+    }
+};
+
+const it6 = obj6[Symbol.iterator]();
+
+console.log('\n 1 iteração: ', it6.next());
+console.log('\n 2 iteração: ', it6.next());
+console.log('\n 3 iteração: ', it6.next());
+console.log('\n 4 iteração: ', it6.next());
+console.log('\n 5 iteração: ', it6.next());
